@@ -13,10 +13,10 @@ import {
 
 export default function Sidebar() {
   return (
-    <div>
-      
+    <div className="">
+
       {/* Twitter Logo */}
-      <div>
+      <div className="hoverEffect">
         <Image
           width={50}
           height={50}
@@ -26,7 +26,7 @@ export default function Sidebar() {
 
       {/* Menu */}
       <div>
-        <SidebarMenuItem text="Home" Icon={HomeIcon} />
+        <SidebarMenuItem text="Home" Icon={HomeIcon} active/>
         <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
         <SidebarMenuItem text="Notifications" Icon={BellIcon} />
         <SidebarMenuItem text="Messages" Icon={InboxIcon} />
@@ -37,11 +37,12 @@ export default function Sidebar() {
       </div>
 
       {/* Button */}
-      <button>Tweet</button>
+      <button className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-sm hover:brightness-95 text-lg hidden xl:inline">Tweet</button>
       
       {/* Mini Profie */}
-      <div className="">
+      <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
         <img
+          className="rounded-full"
           src="https://render.fineartamerica.com/images/rendered/small/flat/round-beach-towel/images-medium-5/fatih-sultan-mehmed-ii-gentile-bellini.jpg?transparent=0&targetx=0&targety=-137&imagewidth=788&imageheight=1063&modelwidth=788&modelheight=788&backgroundcolor=2D181D&orientation=0&producttype=beachtowelround"
           alt="user-img"
         />
