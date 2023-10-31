@@ -17,6 +17,7 @@ export default function Home() {
         <Feed/>
 
         {/* Widgets */}
+        <Widget/>
       </main>
     </div>
   );
