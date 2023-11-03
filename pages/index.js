@@ -30,7 +30,7 @@ export async function getServerSideProps(){
   .then((res) => res.json())
 
   // who to follow section
-  const randomUsersResults = await fetch("https://randomuser.me/api/?results=5&inc=name,login,picture")
+  const randomUsersResults = await fetch("https://randomuser.me/api/?results=50&inc=name,login,picture")
   .then((res) => res.json())
  
   return {
