@@ -22,7 +22,16 @@ export default function Feed() {
       img: "https://plus.unsplash.com/premium_photo-1666792562882-8bd04befec7e?auto=format&fit=crop&q=80&w=1975&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       text: "Wow!",
       timestamp: "1 day ago"
-    }  
+    },  
+    {
+      id: "3",
+      name: "Ahmet",
+      username: "codewithahmet",
+      userImg:"https://render.fineartamerica.com/images/rendered/small/flat/round-beach-towel/images-medium-5/fatih-sultan-mehmed-ii-gentile-bellini.jpg?transparent=0&targetx=0&targety=-137&imagewidth=788&imageheight=1063&modelwidth=788&modelheight=788&backgroundcolor=2D181D&orientation=0&producttype=beachtowelround",
+      img: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=2940&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      text: "Yaşamak bir ağaç gibi hür ve bir orman gibi kardeşcesine..!",
+      timestamp: "1 day ago"
+    },  
   ]
   
   return (

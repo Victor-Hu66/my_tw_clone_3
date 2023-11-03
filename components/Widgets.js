@@ -27,7 +27,7 @@ export default function Widgets({newsResults, randomUsersResults}) {
         </div>
 
         {/* Who to follow */}
-        <div className="text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl w-[80%] xl:w-[90%]">
+        <div className=" sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl w-[80%] xl:w-[90%]">
           <h4 className="font-bold text-xl px-4">Who to follow</h4>
           {randomUsersResults.slice(0,randomUserNum).map((randomUser) => (
             <div 
