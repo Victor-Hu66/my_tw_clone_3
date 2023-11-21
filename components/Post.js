@@ -21,7 +21,7 @@ export default function Post({post}) {
                 {/* post text */}
                 <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">{post.text}</p>
                 {/* post image */}
-                <img className="rounded-2xl mr-2" src={post.img} alt="" />
+                <img className="rounded-2xl mr-2" src={post.img} alt="asd" />
                 {/* icons */}
                 <div className="flex justify-between text-gray-500 p-2">
                     <ChatIcon className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100

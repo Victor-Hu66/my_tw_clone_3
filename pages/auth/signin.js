@@ -12,13 +12,14 @@ export default function signin({ providers }) {
         {Object.values(providers).map((provider) => (
           <div className="flex flex-col items-center">
             <img 
+            alt="twitter-logo"
             className="w-36 object-cover"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/220px-Logo_of_Twitter.svg.png" />
             <p className="text-center text-sm italic my-10">This app is created for learning purposes</p>
             <button onClick={() => signIn(provider.id, {callbackUrl: "/"})} className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500">Sign in with {provider.name}</button>
           </div>
         ))} 
-      </div>
+      </div> 
     </div>
   ); 
 }

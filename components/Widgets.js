@@ -36,7 +36,7 @@ export default function Widgets({newsResults, randomUsersResults}) {
                  <img
                   className="rounded-full"
                   width="40"
-                  src={randomUser.picture.thumbnail} alt="" />
+                  src={randomUser.picture.thumbnail} alt="asd" />
                   <div className="truncate ml-4 leading-5">
                     <h4 className="font-bold hover:underline text-[14px] truncate">{randomUser.login.username}</h4>
                     <h5 className="text-[13px] text-gray-500 truncate">{randomUser.name.first+" "+randomUser.name.last}</h5>
