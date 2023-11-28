@@ -1,11 +1,28 @@
 import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
 import { useSession, signOut  } from "next-auth/react";
+import { useState } from "react"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
+import { db } from "@/firebase";
 
 export default function Input() {
   const { data: session } = useSession();
-  console.log(session);
+  const [input, setInput] = useState("")
+  
+  const sendPost = async () => {
+     const docRef = await addDoc(collection(db, "posts"), {
+      id: session.user.uid,
+      text: input,
+      userImg: session.user.image,
+      timestamp: serverTimestamp(),
+      name: session.user.name,
+      username: session.user.username
+     })
+
+     setInput("")
+  }
+  
   return (
-    <>
+    <> 
       {session && (
         <div className="flex border-b border-gray-200 p-3 space-x-3">
           <img
@@ -20,6 +37,8 @@ export default function Input() {
                 className="w-full border-none focus:ring-0 text-lg placeholder-gray-700 tracking-wide min-h-[50px] text-gray-700"
                 placeholder="What's happening?"
                 rows="2"
+                value={input}
+                onChange= {(e)=>setInput(e.target.value)}
               ></textarea>
             </div>
             <div className="flex items-center justify-between pt-2.5">
@@ -27,7 +46,7 @@ export default function Input() {
                 <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-slate-100" />
                 <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-slate-100" />
               </div>
-              <button className="bg-blue-400 text-white px-4 py-1.5 rounded-full font-bold shadow-md hover:brightness-95 disabled:opacity-50">
+              <button onClick={sendPost} disabled={!input.trim()} className="bg-blue-400 text-white px-4 py-1.5 rounded-full font-bold shadow-md hover:brightness-95 disabled:opacity-50">
                 Tweet
               </button>
             </div>

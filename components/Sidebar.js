@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { SidebarMenuItem } from "./SidebarMenuItem";
-import { DotsHorizontalIcon, HomeIcon } from "@heroicons/react/solid";
 import {
   BellIcon,
   BookmarkIcon,
@@ -10,7 +9,8 @@ import {
   InboxIcon,
   UserIcon,
 } from "@heroicons/react/outline";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { DotsHorizontalIcon, HomeIcon } from "@heroicons/react/solid";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Sidebar() {
   const { data: session } = useSession();
@@ -51,13 +51,13 @@ export default function Sidebar() {
           {/* Mini Profie */}
           <div className="hoverEffect  text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
             <img
-              onClick={signOut }
+              onClick={signOut}
               className="rounded-full h-10 w-10 xl:mr-2"
-              src={session.user.image }
+              src={session.user.image}
               alt="user-img"
             />
             <div className="leading-5 hidden xl:inline">
-              <h4 className="font-bold">{session.user.name }</h4>
+              <h4 className="font-bold">{session.user.name}</h4>
               <p className="text-gray-500">@{session.user.username}</p>
             </div>
             <DotsHorizontalIcon className="h-5 xl:ml-8" />
@@ -65,9 +65,15 @@ export default function Sidebar() {
         </>
       ) : (
         <>
-        <button onClick={signIn} className="bg-blue-400 text-white rounded-full w-36 h-12 font-bold shadow-sm hover:brightness-95 text-lg hidden xl:inline">Sign In </button>
+          <button
+            onClick={signIn}
+            className="bg-blue-400 text-white rounded-full w-36 h-12 font-bold shadow-sm hover:brightness-95 text-lg hidden xl:inline"
+          >
+            Sign In{" "}
+          </button>
         </>
       )}
     </div>
-  ); 
+  );
 }
+ 
