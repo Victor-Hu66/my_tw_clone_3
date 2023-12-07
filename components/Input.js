@@ -1,32 +1,63 @@
 import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
-import { useSession, signOut  } from "next-auth/react";
-import { useState } from "react"
-import { addDoc, collection, serverTimestamp } from "firebase/firestore"
-import { db } from "@/firebase";
+import { useSession, signOut } from "next-auth/react";
+import { useState, useRef } from "react";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import { db, storage } from "@/firebase";
+import { uploadString, ref, getDownloadURL } from "firebase/storage";
 
 export default function Input() {
   const { data: session } = useSession();
-  const [input, setInput] = useState("")
-  
+  const [input, setInput] = useState("");
+  const filePickerRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const sendPost = async () => {
-     const docRef = await addDoc(collection(db, "posts"), {
+    const docRef = await addDoc(collection(db, "posts"), {
       id: session.user.uid,
       text: input,
       userImg: session.user.image,
       timestamp: serverTimestamp(),
       name: session.user.name,
-      username: session.user.username
-     })
+      username: session.user.username,
+    });
 
-     setInput("")
-  }
-  
+    const imageRef = ref(storage, `posts/${docRef.id}/image`);
+    if (selectedFile) {
+      await uploadString(imageRef, selectedFile, "data_url").then(async () => {
+        const downloadURL = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "posts", docRef.id), {
+          image: downloadURL,
+        });
+      });
+      // setSelectedFile(null)
+    }
+
+    setInput("");
+  };
+  //  console.log(selectedFile);
+  const addImageToPost = (e) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    reader.onload = (readerEvent) => {
+      setSelectedFile(readerEvent.target.result);
+      console.log(selectedFile);
+    };
+  };
+
   return (
-    <> 
+    <>
       {session && (
         <div className="flex border-b border-gray-200 p-3 space-x-3">
           <img
-          onClick={signOut}
+            onClick={signOut}
             src={session.user.image}
             alt="user-img"
             className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
@@ -38,15 +69,27 @@ export default function Input() {
                 placeholder="What's happening?"
                 rows="2"
                 value={input}
-                onChange= {(e)=>setInput(e.target.value)}
+                onChange={(e) => setInput(e.target.value)}
               ></textarea>
             </div>
             <div className="flex items-center justify-between pt-2.5">
               <div className="flex">
+                <div onClick={() => filePickerRef.current.click()}>
+                  <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-slate-100" />
+                  <input
+                    type="file"
+                    hidden
+                    ref={filePickerRef}
+                    onClick={addImageToPost}
+                  />
+                </div> 
                 <EmojiHappyIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-slate-100" />
-                <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-slate-100" />
               </div>
-              <button onClick={sendPost} disabled={!input.trim()} className="bg-blue-400 text-white px-4 py-1.5 rounded-full font-bold shadow-md hover:brightness-95 disabled:opacity-50">
+              <button
+                onClick={sendPost}
+                disabled={!input.trim()}
+                className="bg-blue-400 text-white px-4 py-1.5 rounded-full font-bold shadow-md hover:brightness-95 disabled:opacity-50"
+              >
                 Tweet
               </button>
             </div>
