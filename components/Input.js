@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "@/firebase";
 import { uploadString, ref, getDownloadURL } from "firebase/storage";
+import { XIcon } from "@heroicons/react/solid";
 
 export default function Input() {
   const { data: session } = useSession();
@@ -73,6 +74,12 @@ export default function Input() {
                 onChange={(e) => setInput(e.target.value)}
               ></textarea>
             </div>
+            { selectedFile && (
+              <div className="relative">
+                <XIcon onClick={() => setSelectedFile(null)} className="h-7 text-black absolute cursor-pointer shadow-md rounded-full shadow-white"/>
+                 <img src={selectedFile  } alt="" />
+              </div>
+            )}
             <div className="flex items-center justify-between pt-2.5">
               <div className="flex">
                 <div className="" onClick={() => filePickerRef.current.click()}>
