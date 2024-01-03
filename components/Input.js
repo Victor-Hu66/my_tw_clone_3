@@ -15,10 +15,14 @@ import { XIcon } from "@heroicons/react/solid";
 export default function Input() {
   const { data: session } = useSession();
   const [input, setInput] = useState("");
-  const filePickerRef = useRef(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const filePickerRef = useRef(null);
 
-  const sendPost = async () => {
+  const sendPost = async () => { 
+    if (loading) return;
+    setLoading(true);
+      
     const docRef = await addDoc(collection(db, "posts"), {
       id: session.user.uid,
       text: input,
@@ -41,12 +45,13 @@ export default function Input() {
 
     setInput("");
     setSelectedFile(null);
+    setLoading(false);
   };
 
   const addImageToPost = (e) => {
     const reader = new FileReader();
     if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0]); 
     }
 
     reader.onload = (readerEvent) => {
@@ -77,7 +82,7 @@ export default function Input() {
             { selectedFile && (
               <div className="relative">
                 <XIcon onClick={() => setSelectedFile(null)} className="h-7 text-black absolute cursor-pointer shadow-md rounded-full shadow-white"/>
-                 <img src={selectedFile  } alt="" />
+                 <img src={selectedFile  } alt="" className={`${loading && "animate-pulse"}`}/>
               </div>
             )}
             <div className="flex items-center justify-between pt-2.5">
