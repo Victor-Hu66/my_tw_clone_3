@@ -85,7 +85,9 @@ export default function Input() {
                  <img src={selectedFile  } alt="" className={`${loading && "animate-pulse"}`}/>
               </div>
             )}
-            <div className="flex items-center justify-between pt-2.5">
+            {!loading && (
+              <>
+                <div className="flex items-center justify-between pt-2.5">
               <div className="flex">
                 <div className="" onClick={() => filePickerRef.current.click()}>
                   <PhotographIcon className="h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100" />
@@ -105,7 +107,9 @@ export default function Input() {
               >
                 Tweet
               </button>
-            </div>
+            </div>               
+              </>
+            )}
           </div>
         </div>
       )}
