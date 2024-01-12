@@ -38,7 +38,7 @@ export default function Post({ post }) {
   }, [likes]);
 
   async function likePost() {
-    if (session){
+    if (session) {
       if (hasLiked) {
         await deleteDoc(doc(db, "posts", post.id, "likes", session?.user?.uid));
       } else {
@@ -47,8 +47,12 @@ export default function Post({ post }) {
         });
       }
     } else {
-      signIn()
+      signIn();
     }
+  }
+
+  async function deletePost(){
+    deleteDoc(doc(db, "posts", post.id));
   }
 
   return (
@@ -90,10 +94,13 @@ export default function Post({ post }) {
             className="h-9 w-9 hoverEffect p-2 hover:text-sky-500 hover:bg-sky-100
                     "
           />
-          <TrashIcon
-            className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100
-                    "
-          />
+          {session?.user?.uid === post?.data().id && (
+            <TrashIcon
+            onClick={deletePost}
+              className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100
+                              "
+            />
+          )}
           <div className="flex items-center ">
             {hasLiked ? (
               <HeartIconFilled
@@ -106,9 +113,15 @@ export default function Post({ post }) {
                 onClick={likePost}
                 className="h-9 w-9 hoverEffect p-2 hover:text-red-600 hover:bg-red-100
                     "
-               /> 
+              />
             )}
-            {likes.length > 0 && <span className={`${hasLiked && "text-red-600"} text-sm select-none`}>{likes.length}</span>}
+            {likes.length > 0 && (
+              <span
+                className={`${hasLiked && "text-red-600"} text-sm select-none`}
+              >
+                {likes.length}
+              </span>
+            )}
           </div>
 
           <ShareIcon
