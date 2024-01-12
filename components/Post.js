@@ -1,4 +1,4 @@
-import { db } from "@/firebase";
+import { db, storage } from "@/firebase";
 import {
   ChartBarIcon,
   ChatIcon,
@@ -15,6 +15,7 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Moment from "react-moment";
@@ -53,6 +54,7 @@ export default function Post({ post }) {
 
   async function deletePost(){
     deleteDoc(doc(db, "posts", post.id));
+    deleteObject(ref(storage, `posts/${post.id}/image`));
   }
 
   return (
