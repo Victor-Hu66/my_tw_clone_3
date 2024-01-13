@@ -27,7 +27,7 @@ export default function Widgets({ newsResults, randomUsersResults }) {
         <AnimatePresence>
           {newsResults.slice(0, articleNum).map((article, index) => (
             <motion.div
-              ket={article.title}
+              key={article.title}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -48,7 +48,15 @@ export default function Widgets({ newsResults, randomUsersResults }) {
       {/* Who to follow */}
       <div className=" sticky top-16 text-gray-700 space-y-3 bg-gray-100 pt-2 rounded-xl w-[80%] xl:w-[90%]">
         <h4 className="font-bold text-xl px-4">Who to follow</h4>
+        <AnimatePresence>
         {randomUsersResults.slice(0, randomUserNum).map((randomUser) => (
+           <motion.div
+           key={randomUser.login.username}
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           exit={{ opacity: 0 }}
+           transition={{ duration: 1 }}
+         >
           <div
             className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200"
             key={randomUser.login.username}
@@ -71,7 +79,9 @@ export default function Widgets({ newsResults, randomUsersResults }) {
               Follow
             </button>
           </div>
+          </motion.div>
         ))}
+        </AnimatePresence>
         <button
           onClick={() => setRandomUserNum(randomUserNum + 3)}
           className="text-blue-300 pl-4 pb-3 hover:text-blue-400"
