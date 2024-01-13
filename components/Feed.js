@@ -4,6 +4,7 @@ import Post from "./Post";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -11,14 +12,13 @@ export default function Feed() {
   useEffect(
     () =>
       onSnapshot(
-        query(collection(db, "posts")),
-        orderBy("timestamp", "desc"),
+        query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
           setPosts(snapshot.docs);
         }
       ),
     []
-  );
+  )
 
   return (
     <div className="xl:ml-[370px] border-l border-r border-gray-200 xl:min-w-[576px] sm:ml-[73px] flex-grow max-w-xl">
@@ -29,9 +29,19 @@ export default function Feed() {
         </div>
       </div>
       <Input />
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
+      <AnimatePresence>
+        {posts.map((post) => (
+          <motion.div
+            key={post.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 } }
+            transition={{ duration: 1 }}
+          >
+            <Post key={post.id} post={post} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
