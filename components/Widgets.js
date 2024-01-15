@@ -58,7 +58,7 @@ export default function Widgets({ newsResults, randomUsersResults }) {
            transition={{ duration: 1 }}
          >
           <div
-            className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200"
+            className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200 transition duration-500 ease-out"
             key={randomUser.login.username}
           >
             <img
