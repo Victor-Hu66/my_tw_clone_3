@@ -1,4 +1,4 @@
-import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
+      import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
 import { useSession, signOut } from "next-auth/react";
 import { useState, useRef } from "react";
 import {
