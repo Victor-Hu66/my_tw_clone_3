@@ -1,10 +1,11 @@
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
+import { useRouter  } from "next/router";
 import Modal from "react-modal";
 import { XIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
 import { db } from "@/firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import Moment from "react-moment";
 import { signIn, useSession } from "next-auth/react";
 import { EmojiHappyIcon, PhotographIcon } from "@heroicons/react/outline";
@@ -15,6 +16,7 @@ export default function CommentModal() {
   const [post, setPost] = useState({});
   const { data: session } = useSession();
   const [input, setInput] = useState("");
+  const router = useRouter()
 
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshot) => {
@@ -22,7 +24,19 @@ export default function CommentModal() {
     });
   }, [postId, db]);
 
-  function sendComment() {}
+  async function sendComment() {
+    await addDoc(collection(db, "posts", postId, "comment"), {
+      comment: input,
+      name: session.user.name,
+      username: session.user.username,
+      userImg: session.user.image,
+      timestamp: serverTimestamp()
+    })
+
+    setOpen(false) 
+    setInput("")
+    router.push(`posts/${postId}`)
+  }
 
   return (
     <div>
@@ -34,7 +48,7 @@ export default function CommentModal() {
           className="max-w-lg w-[90%] absolute top-24 left-[50%] translate-x-[-50%] bg-white border-1 border-gray-200 rounded-xl shadow-md"
         >
           <div className="p-1">
-            <div className="border-b border-gray-200 py-2 px-1.5">
+            <div className="border-b borde   -gray-200 py-2 px-1.5">
               <div
                 onClick={() => setOpen(false)}
                 className="hoverEffect w-10 h-10 flex items-center justify-center"
@@ -59,6 +73,7 @@ export default function CommentModal() {
                 <Moment fromNow>{post?.data()?.timestamp?.toDate()}</Moment>
               </span>
             </div>
+            <p className="text-gray-500 text-[15px sm:text-[16px] ml-16 mb-2 ">{post?.data()?.text}</p>
 
             <div className="flex p-3 space-x-3">
               <img
