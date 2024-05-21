@@ -38,7 +38,7 @@ export default function PostPage({ newsResults, randomUsersResults }) {
       (snapshot) => setComments(snapshot.docs)
     );
   }, [db, id]);
-  console.log("comments : " + comments);
+
 
   return (
     <div>
@@ -66,7 +66,8 @@ export default function PostPage({ newsResults, randomUsersResults }) {
               {comments.map((comment) => (
                 <Comment
                   key={comment.id}
-                  id={comment.id}
+                  commentId={comment.id}
+                  originalPostId={id}
                   comment={comment.data()}
                 />
               ))}

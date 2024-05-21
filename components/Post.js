@@ -104,12 +104,13 @@ export default function Post({ post, id }) {
           <DotsHorizontalIcon className="h-10 hoverEffect w-10 hover:bg-sky-100 hover:text-sky-500 p-2" />
         </div>
         {/* post text */}
-        <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
+        <p onClick={() => router.push(`/posts/${id}`)} className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
           {post?.data()?.text}
         </p>
         {/* post image */}
         {post?.data()?.image && (
           <img
+            onClick={() => router.push(`/posts/${id}`)}
             className="rounded-2xl mr-2"
             src={post?.data().image}
             alt="asd"
