@@ -10,7 +10,7 @@ export default function signin({ providers }) {
       />
       <div>
         {Object.values(providers).map((provider) => (
-          <div className="flex flex-col items-center">
+          <div key={provider.name} className="flex flex-col items-center">
             <img 
             alt="twitter-logo"
             className="w-36 object-cover"
